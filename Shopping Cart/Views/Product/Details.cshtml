@@ -1,0 +1,50 @@
+﻿@model Shopping_Cart.tblpro
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tblpro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.pname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pprice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pprice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pdetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pdetails)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tblcat.cname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tblcat.cname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.pid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

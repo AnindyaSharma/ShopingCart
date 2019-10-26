@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "cart";
+    Layout = "~/Views/Shared/_fe.cshtml";
+}
+
+<h2>Your cart</h2>
+<table class="table">
+   @{ 
+       var total = 0;
+       myshopDBEntities obj = new myshopDBEntities();
+       var it = obj.tblproes.ToList();
+
+       foreach( var item in ViewBag.c)
+       {
+           
+           foreach(var i in it)
+           {
+               if (i.pid == @item.iid)
+               {
+                   var amu = @item.iqty * @i.pprice;
+                   <tr>
+                       <td>@i.pname</td>
+                       <td>@i.pprice</td>
+                       <td>@item.iqty</td>
+                       <td>@amu</td>
+                   </tr>
+                   total += amu;
+               }
+           }
+       }
+       if(total == 0)
+       {
+           <h2>Your cart is empty.</h2>
+       }
+       else
+       {
+           @Html.BeginForm("checkout", "Home", FormMethod.Post)
+           <tr>
+               <td></td>
+               <td></td>
+               <td>@*Html.ActionLink("Checkout", "checkout", "Home", new { amu = total })*@
+               <input type="hidden" value="@total" name="total" />
+               <input type="submit" value="Checkout" class="btn btn-success btn-sm" />
+               </td>
+               <td>@total</td>
+           </tr>
+           
+       }
+   }
+</table>

@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="myshopDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblcat">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cname" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblimages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="iname" Type="varchar" MaxLength="200" />
+          <Property Name="pid" Type="int" />
+        </EntityType>
+        <EntityType Name="tblorderdetails">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="oid" Type="int" />
+          <Property Name="pid" Type="int" />
+          <Property Name="pprice" Type="money" />
+          <Property Name="pqty" Type="int" />
+          <Property Name="pamount" Type="money" />
+        </EntityType>
+        <EntityType Name="tblorders">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="odate" Type="date" />
+          <Property Name="opname" Type="varchar" MaxLength="50" />
+          <Property Name="opphone" Type="varchar" MaxLength="11" />
+          <Property Name="opaddress" Type="text" />
+          <Property Name="opsaddress" Type="text" />
+          <Property Name="oamount" Type="money" />
+          <Property Name="ostatus" Type="int" />
+        </EntityType>
+        <EntityType Name="tblpro">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pname" Type="varchar" MaxLength="50" />
+          <Property Name="pprice" Type="money" />
+          <Property Name="pdetails" Type="varchar" MaxLength="100" />
+          <Property Name="cid" Type="int" />
+        </EntityType>
+        <EntityType Name="tblusers">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uname" Type="varchar" MaxLength="50" />
+          <Property Name="upass" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_tblimages_tblpro">
+          <End Role="tblpro" Type="Self.tblpro" Multiplicity="0..1" />
+          <End Role="tblimages" Type="Self.tblimages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblpro">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="tblimages">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblorderdetails_tblorders">
+          <End Role="tblorders" Type="Self.tblorders" Multiplicity="0..1" />
+          <End Role="tblorderdetails" Type="Self.tblorderdetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblorders">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="tblorderdetails">
+              <PropertyRef Name="oid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblorderdetails_tblpro">
+          <End Role="tblpro" Type="Self.tblpro" Multiplicity="0..1" />
+          <End Role="tblorderdetails" Type="Self.tblorderdetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblpro">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="tblorderdetails">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblpro_tblcat">
+          <End Role="tblcat" Type="Self.tblcat" Multiplicity="0..1" />
+          <End Role="tblpro" Type="Self.tblpro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblcat">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="tblpro">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="myshopDBModelStoreContainer">
+          <EntitySet Name="tblcat" EntityType="Self.tblcat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblimages" EntityType="Self.tblimages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblorderdetails" EntityType="Self.tblorderdetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblorders" EntityType="Self.tblorders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblpro" EntityType="Self.tblpro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblusers" EntityType="Self.tblusers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblimages_tblpro" Association="Self.FK_tblimages_tblpro">
+            <End Role="tblpro" EntitySet="tblpro" />
+            <End Role="tblimages" EntitySet="tblimages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblorderdetails_tblorders" Association="Self.FK_tblorderdetails_tblorders">
+            <End Role="tblorders" EntitySet="tblorders" />
+            <End Role="tblorderdetails" EntitySet="tblorderdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblorderdetails_tblpro" Association="Self.FK_tblorderdetails_tblpro">
+            <End Role="tblpro" EntitySet="tblpro" />
+            <End Role="tblorderdetails" EntitySet="tblorderdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblpro_tblcat" Association="Self.FK_tblpro_tblcat">
+            <End Role="tblcat" EntitySet="tblcat" />
+            <End Role="tblpro" EntitySet="tblpro" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="myshopDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblcat">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblproes" Relationship="Self.FK_tblpro_tblcat" FromRole="tblcat" ToRole="tblpro" />
+        </EntityType>
+        <EntityType Name="tblimage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pid" Type="Int32" />
+          <NavigationProperty Name="tblpro" Relationship="Self.FK_tblimages_tblpro" FromRole="tblimages" ToRole="tblpro" />
+        </EntityType>
+        <EntityType Name="tblorderdetail">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="oid" Type="Int32" />
+          <Property Name="pid" Type="Int32" />
+          <Property Name="pprice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="pqty" Type="Int32" />
+          <Property Name="pamount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="tblorder" Relationship="Self.FK_tblorderdetails_tblorders" FromRole="tblorderdetails" ToRole="tblorders" />
+          <NavigationProperty Name="tblpro" Relationship="Self.FK_tblorderdetails_tblpro" FromRole="tblorderdetails" ToRole="tblpro" />
+        </EntityType>
+        <EntityType Name="tblorder">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="odate" Type="DateTime" Precision="0" />
+          <Property Name="opname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="opphone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="opaddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="opsaddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oamount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ostatus" Type="Int32" />
+          <NavigationProperty Name="tblorderdetails" Relationship="Self.FK_tblorderdetails_tblorders" FromRole="tblorders" ToRole="tblorderdetails" />
+        </EntityType>
+        <EntityType Name="tblpro">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pprice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="pdetails" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cid" Type="Int32" />
+          <NavigationProperty Name="tblcat" Relationship="Self.FK_tblpro_tblcat" FromRole="tblpro" ToRole="tblcat" />
+          <NavigationProperty Name="tblimages" Relationship="Self.FK_tblimages_tblpro" FromRole="tblpro" ToRole="tblimages" />
+          <NavigationProperty Name="tblorderdetails" Relationship="Self.FK_tblorderdetails_tblpro" FromRole="tblpro" ToRole="tblorderdetails" />
+        </EntityType>
+        <EntityType Name="tbluser">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="upass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_tblpro_tblcat">
+          <End Role="tblcat" Type="Self.tblcat" Multiplicity="0..1" />
+          <End Role="tblpro" Type="Self.tblpro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblcat">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="tblpro">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblimages_tblpro">
+          <End Role="tblpro" Type="Self.tblpro" Multiplicity="0..1" />
+          <End Role="tblimages" Type="Self.tblimage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblpro">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="tblimages">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblorderdetails_tblorders">
+          <End Role="tblorders" Type="Self.tblorder" Multiplicity="0..1" />
+          <End Role="tblorderdetails" Type="Self.tblorderdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblorders">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="tblorderdetails">
+              <PropertyRef Name="oid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblorderdetails_tblpro">
+          <End Role="tblpro" Type="Self.tblpro" Multiplicity="0..1" />
+          <End Role="tblorderdetails" Type="Self.tblorderdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblpro">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="tblorderdetails">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="myshopDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblcats" EntityType="Self.tblcat" />
+          <EntitySet Name="tblimages" EntityType="Self.tblimage" />
+          <EntitySet Name="tblorderdetails" EntityType="Self.tblorderdetail" />
+          <EntitySet Name="tblorders" EntityType="Self.tblorder" />
+          <EntitySet Name="tblproes" EntityType="Self.tblpro" />
+          <EntitySet Name="tblusers" EntityType="Self.tbluser" />
+          <AssociationSet Name="FK_tblpro_tblcat" Association="Self.FK_tblpro_tblcat">
+            <End Role="tblcat" EntitySet="tblcats" />
+            <End Role="tblpro" EntitySet="tblproes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblimages_tblpro" Association="Self.FK_tblimages_tblpro">
+            <End Role="tblpro" EntitySet="tblproes" />
+            <End Role="tblimages" EntitySet="tblimages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblorderdetails_tblorders" Association="Self.FK_tblorderdetails_tblorders">
+            <End Role="tblorders" EntitySet="tblorders" />
+            <End Role="tblorderdetails" EntitySet="tblorderdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblorderdetails_tblpro" Association="Self.FK_tblorderdetails_tblpro">
+            <End Role="tblpro" EntitySet="tblproes" />
+            <End Role="tblorderdetails" EntitySet="tblorderdetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="myshopDBModelStoreContainer" CdmEntityContainer="myshopDBEntities1">
+          <EntitySetMapping Name="tblcats">
+            <EntityTypeMapping TypeName="myshopDBModel.tblcat">
+              <MappingFragment StoreEntitySet="tblcat">
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="cname" ColumnName="cname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblimages">
+            <EntityTypeMapping TypeName="myshopDBModel.tblimage">
+              <MappingFragment StoreEntitySet="tblimages">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="iname" ColumnName="iname" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblorderdetails">
+            <EntityTypeMapping TypeName="myshopDBModel.tblorderdetail">
+              <MappingFragment StoreEntitySet="tblorderdetails">
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="pprice" ColumnName="pprice" />
+                <ScalarProperty Name="pqty" ColumnName="pqty" />
+                <ScalarProperty Name="pamount" ColumnName="pamount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblorders">
+            <EntityTypeMapping TypeName="myshopDBModel.tblorder">
+              <MappingFragment StoreEntitySet="tblorders">
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="odate" ColumnName="odate" />
+                <ScalarProperty Name="opname" ColumnName="opname" />
+                <ScalarProperty Name="opphone" ColumnName="opphone" />
+                <ScalarProperty Name="opaddress" ColumnName="opaddress" />
+                <ScalarProperty Name="opsaddress" ColumnName="opsaddress" />
+                <ScalarProperty Name="oamount" ColumnName="oamount" />
+                <ScalarProperty Name="ostatus" ColumnName="ostatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblproes">
+            <EntityTypeMapping TypeName="myshopDBModel.tblpro">
+              <MappingFragment StoreEntitySet="tblpro">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="pname" ColumnName="pname" />
+                <ScalarProperty Name="pprice" ColumnName="pprice" />
+                <ScalarProperty Name="pdetails" ColumnName="pdetails" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblusers">
+            <EntityTypeMapping TypeName="myshopDBModel.tbluser">
+              <MappingFragment StoreEntitySet="tblusers">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="uname" ColumnName="uname" />
+                <ScalarProperty Name="upass" ColumnName="upass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

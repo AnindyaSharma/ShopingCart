@@ -1,0 +1,31 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Images";
+}
+
+@{
+    Html.BeginForm("Images", "Product", FormMethod.Post, new { enctype = "multipart/Form-data" });
+
+     foreach (var p in ViewBag.pro)
+    {
+        <h2>Add image for @p.pname</h2>
+
+        <table>
+            <tr>
+                <td>Select Image: </td>
+                <td><input type="file" name="file" /></td>
+                <td><input type="submit" value="Save" /></td>
+            </tr>
+        </table>
+    }
+}
+<hr />
+<div>
+    @foreach (var i in @ViewBag.imgs)
+    {
+        <img src="~/Content/Images/@i.iname" width="100" height="100" />
+    }
+</div>
+

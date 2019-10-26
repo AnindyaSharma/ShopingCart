@@ -1,0 +1,42 @@
+﻿@model Shopping_Cart.tblorder
+@{
+    ViewBag.Title = "checkout";
+    Layout = "~/Views/Shared/_fe.cshtml";
+}
+
+<h2>Checkout</h2>
+
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <table class="table">
+            @{
+                var t = @ViewBag.t;
+                Html.BeginForm("doneorder", "Home", FormMethod.Post);
+                <tr>
+                    <td>Name: </td>
+                    <td>@Html.TextBoxFor(a => a.opname)</td>
+                </tr>
+                <tr>
+                    <td>Phone: </td>
+                    <td>@Html.TextBoxFor(a => a.opphone)</td>
+                </tr>
+                <tr>
+                    <td>Address: </td>
+                    <td>@Html.TextBoxFor(a => a.opsaddress)</td>
+                </tr>
+                <tr>
+                    <td>Shipping Address: </td>
+                    <td>@Html.TextBoxFor(a => a.opsaddress)</td>
+                </tr>
+                <tr>
+                    <td>Total Amount : </td>
+                    <td>@Html.TextBox("total", new { t })</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Order Now" /></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
